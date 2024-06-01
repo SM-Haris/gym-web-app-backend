@@ -3,6 +3,7 @@ import Exception from '../../helpers/Exception'
 import Validators from '../../helpers/Validators'
 import ErrorCodes from '../../constants/ErrorCodes'
 import GymManager from './GymManager'
+import Gym from '../../constants/Gym'
 
 class GymController {
   static async getGym(req: Request, res: Response) {

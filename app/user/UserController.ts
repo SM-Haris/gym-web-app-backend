@@ -3,6 +3,7 @@ import Exception from '../../helpers/Exception'
 import Validators from '../../helpers/Validators'
 import ErrorCodes from '../../constants/ErrorCodes'
 import UserManager from './UserManager'
+import User from '../../constants/User'
 
 class UserController {
   static async getUser(req: Request, res: Response) {

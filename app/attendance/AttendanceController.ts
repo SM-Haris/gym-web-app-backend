@@ -3,6 +3,7 @@ import Exception from '../../helpers/Exception'
 import Validators from '../../helpers/Validators'
 import ErrorCodes from '../../constants/ErrorCodes'
 import AttendanceManager from './AttendanceManager'
+import Attendance from '../../constants/Attendance'
 
 class AttendanceController {
   static async getAttendance(req: Request, res: Response) {

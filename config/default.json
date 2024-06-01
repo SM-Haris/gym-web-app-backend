@@ -1,0 +1,16 @@
+{
+  "port": "5000",
+  "corsUrl": "*",
+  "database": {
+    "name": "gym_db",
+    "client": "postgres",
+    "host": "localhost",
+    "username": "postgres",
+    "port": 5432,
+    "password": "1234",
+    "pool": {
+      "min": 2,
+      "max": 10
+    }
+  }
+}
