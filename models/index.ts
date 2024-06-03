@@ -5,7 +5,7 @@ import config from 'config'
 import pg from 'pg'
 import Exception from '../helpers/Exception'
 import ErrorMessages from '../constants/ErrorMessages'
-import { DatabaseConfig } from '../interface/Config'
+import { DatabaseConfig } from '../interfaces/Config'
 
 const _dirname = dirname(__filename)
 
@@ -63,6 +63,7 @@ const createConnection = async () => {
   try {
     await sequelize.authenticate()
     await syncModels()
+    await sequelize.sync({ force: true })
   } catch (error) {
     const customError = error as Exception
 

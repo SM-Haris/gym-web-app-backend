@@ -1,9 +1,9 @@
 import Exception from '../../helpers/Exception'
 
-class AttendanceManager {
-  static async getAttendance() {
+class MemberManager {
+  static async getMember() {
     try {
-      return 'Attendance Here'
+      return 'Member Here'
     } catch (error) {
       const customError = error as Exception
       throw customError
@@ -11,4 +11,4 @@ class AttendanceManager {
   }
 }
 
-export default AttendanceManager
+export default MemberManager

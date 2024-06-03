@@ -12,5 +12,10 @@
       "min": 2,
       "max": 10
     }
+  },
+  "secretKey": "secret",
+  "timeouts": {
+    "login": "2h",
+    "refreshToken": "4h"
   }
 }

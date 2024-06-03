@@ -21,6 +21,13 @@ class Validators {
 
     return re.test(String(email).toLowerCase())
   }
+
+  static isValidPassword(password: string) {
+    const re = /^[a-zA-Z0-9]{8}$/
+
+    return re.test(password)
+  }
+
 }
 
 export default Validators

@@ -24,7 +24,6 @@ app.use(function (req, res, next) {
   next(createError(404))
 })
 
-// eslint-disable-next-line
 app.use(function (err: any, req: Request, res: Response, _next: NextFunction) {
   res.status(err.status || 500)
   res.send({
@@ -37,14 +36,14 @@ app.listen(port, () => {
   console.log(`[INFO] Server is listening at http://localhost:${port}`)
 })
 
-const startServer = async() =>{
+const startServer = async () => {
   try {
     console.log('[INFO] Connecting to Database...')
     await Database.createConnection()
     console.log('[INFO] Database connected')
   } catch (error) {
     const customError = error as Exception
-    console.log(`[ERROR] ${customError.message}`)    
+    console.log(`[ERROR] ${customError.message}`)
   }
 }
 
