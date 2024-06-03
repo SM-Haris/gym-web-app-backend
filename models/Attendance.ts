@@ -7,6 +7,7 @@ import {
 } from 'sequelize'
 import { v4 } from 'uuid'
 import Database from './index'
+import Member from './Member'
 
 class Attendance extends Model<
   InferAttributes<Attendance>,
@@ -31,7 +32,7 @@ Attendance.init(
       allowNull: true,
     },
     member_id: {
-      type: DataTypes.TEXT,
+      type: DataTypes.UUID,
       allowNull: true,
     },
     created_at: {
@@ -45,5 +46,11 @@ Attendance.init(
   },
   { timestamps: false, sequelize: Database.sequelize, tableName: 'attendance' }
 )
+
+Attendance.belongsTo(Member, {
+  foreignKey: 'member_id',
+  onDelete: 'cascade',
+  onUpdate: 'cascade'
+})
 
 export default Attendance

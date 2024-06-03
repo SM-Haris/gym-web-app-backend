@@ -7,6 +7,7 @@ import {
 } from 'sequelize'
 import { v4 } from 'uuid'
 import Database from './index'
+import User from './User'
 
 class Gym extends Model<InferAttributes<Gym>, InferCreationAttributes<Gym>> {
   declare id: CreationOptional<string>
@@ -33,7 +34,7 @@ Gym.init(
       allowNull: true,
     },
     owner_id: {
-      type: DataTypes.TEXT,
+      type: DataTypes.UUID,
       allowNull: true,
     },
     created_at: {
@@ -47,5 +48,11 @@ Gym.init(
   },
   { timestamps: false, sequelize: Database.sequelize, tableName: 'gym' }
 )
+
+Gym.belongsTo(User, {
+  foreignKey: 'owner_id',
+  onDelete: 'cascade',
+  onUpdate: 'cascade'
+})
 
 export default Gym

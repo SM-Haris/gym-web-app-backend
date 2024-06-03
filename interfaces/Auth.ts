@@ -27,5 +27,5 @@ export interface LoginRequestBody {
 }
 
 export interface UserRequest extends Request {
-  user?: User
+  user: User
 }

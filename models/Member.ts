@@ -7,6 +7,7 @@ import {
 } from 'sequelize'
 import { v4 } from 'uuid'
 import Database from './index'
+import Gym from './Gym'
 
 class Member extends Model<
   InferAttributes<Member>,
@@ -37,7 +38,7 @@ Member.init(
       allowNull: true,
     },
     gym_id: {
-      type: DataTypes.TEXT,
+      type: DataTypes.UUID,
       allowNull: true,
     },
     phone_number: {
@@ -55,5 +56,11 @@ Member.init(
   },
   { timestamps: false, sequelize: Database.sequelize, tableName: 'member' }
 )
+
+Member.belongsTo(Gym, {
+  foreignKey: 'gym_id',
+  onDelete: 'cascade',
+  onUpdate: 'cascade'
+})
 
 export default Member
