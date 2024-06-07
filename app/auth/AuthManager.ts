@@ -10,7 +10,6 @@ import AuthUtil from '../../utils/AuthUtil'
 
 class AuthManager {
   static async signup(data: SignUpRequestBody) {
-
     AuthUtil.validateSignUpRequest(data)
 
     let user
@@ -27,14 +26,20 @@ class AuthManager {
 
     const createdUser: User = await UserHandler.createUser(updatedUserData)
 
-    const { accessToken, refreshToken } =
+    const { access_token, refresh_token } =
       await AuthManager.setAccessToken(createdUser)
 
-    return { ...data, id: createdUser.id, password: createdUser.password, accessToken, refreshToken }
+    return {
+      ...data,
+      id: createdUser.id,
+      password: createdUser.password,
+      access_token,
+      refresh_token,
+    }
   }
 
   static async login(data: LoginRequestBody) {
-    let user 
+    let user
 
     AuthUtil.validateLoginRequest(data)
 
@@ -49,28 +54,29 @@ class AuthManager {
 
     AuthUtil.validatePasswordComparison(passwordMatched)
 
-    const { accessToken, refreshToken } = await AuthManager.setAccessToken(user)
+    const { access_token, refresh_token } =
+      await AuthManager.setAccessToken(user)
 
-    return { ...user.dataValues, accessToken, refreshToken }
+    return { ...user.dataValues, access_token, refresh_token }
   }
 
   static async setAccessToken(user: User) {
     if (!user.id) return user
 
-    const accessToken = Token.getLoginToken(user)
+    const access_token = Token.getLoginToken(user)
 
-    const refreshToken = Token.getRefreshToken(user)
+    const refresh_token = Token.getRefreshToken(user)
 
-    await UserHandler.setAccessToken(user.id, accessToken, refreshToken)
+    await UserHandler.setAccessToken(user.id, access_token, refresh_token)
 
-    return { ...user, accessToken, refreshToken }
+    return { ...user, access_token, refresh_token }
   }
 
   static async getUserDetails(email: string) {
     const user = await UserHandler.findUserByEmail(email)
 
-    delete user.accessToken
-    delete user.refreshToken
+    delete user.access_token
+    delete user.refresh_token
     delete user.password
 
     return user

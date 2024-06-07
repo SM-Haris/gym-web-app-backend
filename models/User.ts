@@ -7,6 +7,7 @@ import {
 } from 'sequelize'
 import { v4 } from 'uuid'
 import Database from './index'
+import Gym from './Gym'
 
 class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare id: CreationOptional<string>
@@ -14,8 +15,8 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare email: CreationOptional<string>
   declare password: CreationOptional<string>
   declare phone_number: CreationOptional<string>
-  declare accessToken: CreationOptional<string>
-  declare refreshToken: CreationOptional<string>
+  declare access_token: CreationOptional<string>
+  declare refresh_token: CreationOptional<string>
   declare created_at: CreationOptional<Date>
   declare updated_at: CreationOptional<Date>
 }
@@ -43,11 +44,11 @@ User.init(
       type: DataTypes.TEXT,
       allowNull: true,
     },
-    accessToken: {
+    access_token: {
       type: DataTypes.TEXT,
       allowNull: true,
     },
-    refreshToken: {
+    refresh_token: {
       type: DataTypes.TEXT,
       allowNull: true,
     },

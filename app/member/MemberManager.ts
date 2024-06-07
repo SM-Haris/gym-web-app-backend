@@ -1,3 +1,4 @@
+import AttendanceHandler from '../../handlers/AttendanceHandler'
 import MemberHandler from '../../handlers/MemberHandler'
 import Exception from '../../helpers/Exception'
 import { UserRequest } from '../../interfaces/Auth'
@@ -7,13 +8,22 @@ import MemberUtil from '../../utils/MemberUtil'
 class MemberManager {
   static async getMember(req: UserRequest) {
     try {
+      const today = new Date().toISOString().slice(0, 10)
+
       MemberUtil.validateMemberFetchRequest(req.params.gym_id as string)
 
       await GymUtil.validateGymExists(req.params.gym_id)
 
-      const members = MemberHandler.getMembersByGym(req.params.gym_id)
+      const members = await MemberHandler.getMembersByGym(req.params.gym_id)
 
-      return members
+      const todayAttendance = await AttendanceHandler.getAttendanceByDate(today)
+
+      const updatedMembers = await MemberUtil.markIsPresentToday(
+        members,
+        todayAttendance
+      )
+
+      return updatedMembers
     } catch (error) {
       const customError = error as Exception
       throw customError

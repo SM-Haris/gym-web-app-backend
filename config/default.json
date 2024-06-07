@@ -16,6 +16,6 @@
   "secretKey": "secret",
   "timeouts": {
     "login": "2h",
-    "refreshToken": "4h"
+    "refresh_token": "4h"
   }
 }

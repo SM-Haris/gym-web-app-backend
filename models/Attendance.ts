@@ -15,6 +15,7 @@ class Attendance extends Model<
 > {
   declare id: CreationOptional<string>
   declare date: CreationOptional<string>
+  declare workout_hours: CreationOptional<number>
   declare member_id: CreationOptional<string>
   declare created_at: CreationOptional<Date>
   declare updated_at: CreationOptional<Date>
@@ -29,6 +30,10 @@ Attendance.init(
     },
     date: {
       type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    workout_hours: {
+      type: DataTypes.DECIMAL,
       allowNull: true,
     },
     member_id: {
@@ -50,7 +55,7 @@ Attendance.init(
 Attendance.belongsTo(Member, {
   foreignKey: 'member_id',
   onDelete: 'cascade',
-  onUpdate: 'cascade'
+  onUpdate: 'cascade',
 })
 
 export default Attendance

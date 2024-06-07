@@ -41,7 +41,6 @@ class UserController {
         success: true,
         data: status,
       })
-
     } catch (error) {
       const customError = error as Exception
 
@@ -60,7 +59,6 @@ class UserController {
         })
     }
   }
-
 }
 
 export default UserController

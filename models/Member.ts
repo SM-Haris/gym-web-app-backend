@@ -8,6 +8,7 @@ import {
 import { v4 } from 'uuid'
 import Database from './index'
 import Gym from './Gym'
+import Attendance from './Attendance'
 
 class Member extends Model<
   InferAttributes<Member>,
@@ -60,7 +61,7 @@ Member.init(
 Member.belongsTo(Gym, {
   foreignKey: 'gym_id',
   onDelete: 'cascade',
-  onUpdate: 'cascade'
+  onUpdate: 'cascade',
 })
 
 export default Member

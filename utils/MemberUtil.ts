@@ -65,21 +65,36 @@ class MemberUtil {
 
   static async validateMemberExists(member_id: string) {
     try {
-        const member = await MemberHandler.findMemberById(member_id)
+      const member = await MemberHandler.findMemberById(member_id)
 
-        if (!member) {
-          throw new Exception(
-            MemberConstants.MESSAGES.INVALID_MEMBER_ID,
-            ErrorCodes.BAD_REQUEST,
-            true
-          )
-        }
-    
-        return member            
+      if (!member) {
+        throw new Exception(
+          MemberConstants.MESSAGES.INVALID_MEMBER_ID,
+          ErrorCodes.BAD_REQUEST,
+          true
+        )
+      }
+
+      return member
     } catch (error) {
-        const customError = error as Exception
-        throw customError
+      const customError = error as Exception
+      throw customError
     }
+  }
+
+  static async markIsPresentToday(members: any, attendance: any) {
+    const attendanceSet = new Set(attendance.map((att: any) => att.member_id))
+
+    const updatedMembers = members.map((member: any) => {
+      const isPresentToday = attendanceSet.has(member.id)
+
+      return {
+        ...member,
+        is_present_today: isPresentToday,
+      }
+    })
+
+    return updatedMembers
   }
 }
 

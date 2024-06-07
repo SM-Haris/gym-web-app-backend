@@ -8,6 +8,7 @@ import {
 import { v4 } from 'uuid'
 import Database from './index'
 import User from './User'
+import Member from './Member'
 
 class Gym extends Model<InferAttributes<Gym>, InferCreationAttributes<Gym>> {
   declare id: CreationOptional<string>
@@ -52,7 +53,7 @@ Gym.init(
 Gym.belongsTo(User, {
   foreignKey: 'owner_id',
   onDelete: 'cascade',
-  onUpdate: 'cascade'
+  onUpdate: 'cascade',
 })
 
 export default Gym

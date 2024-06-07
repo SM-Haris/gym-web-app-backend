@@ -50,20 +50,20 @@ class GymUtil {
 
   static async validateGymExists(gym_id: string) {
     try {
-        const gym = await GymHandler.findGymById(gym_id)
+      const gym = await GymHandler.findGymById(gym_id)
 
-        if (!gym_id) {
-          throw new Exception(
-            GymConstants.MESSAGES.INVALID_GYM_ID,
-            ErrorCodes.BAD_REQUEST,
-            true
-          )
-        }
-    
-        return gym            
+      if (!gym) {
+        throw new Exception(
+          GymConstants.MESSAGES.INVALID_GYM_ID,
+          ErrorCodes.BAD_REQUEST,
+          true
+        )
+      }
+
+      return gym
     } catch (error) {
-        const customError = error as Exception
-        throw customError
+      const customError = error as Exception
+      throw customError
     }
   }
 }

@@ -7,7 +7,9 @@ import AttendanceUtil from '../../utils/AttendanceUtil'
 class AttendanceManager {
   static async getAttendance(req: UserRequest) {
     try {
-      const memberId = AttendanceUtil.validateAttendanceFetchRequest(req.params.member_id)
+      const memberId = AttendanceUtil.validateAttendanceFetchRequest(
+        req.params.member_id
+      )
 
       const attendance = await AttendanceHandler.getAttendanceByMember(memberId)
 
@@ -18,16 +20,19 @@ class AttendanceManager {
     }
   }
 
-  static async markAttendance(req: UserRequest) {
+  static async markPresent(req: UserRequest) {
     try {
-      const attendanceData = AttendanceUtil.validateAttendanceMarkRequest(req.body.date,req.params.member_id)
+      const attendanceData = AttendanceUtil.validateAttendancePresentRequest(
+        req.user.created_at as Date,
+        req.body,
+        req.params.member_id
+      )
 
-      let attendance: Attendance | number | null = await AttendanceHandler.getAttendance(attendanceData)
+      let attendance: Attendance | number | null =
+        await AttendanceHandler.getAttendance(attendanceData)
 
       if (attendance) {
-        attendance = await AttendanceHandler.removeAttendance(attendanceData)
-
-        return attendance
+        await AttendanceHandler.updateAttendance(attendanceData)
       }
 
       attendance = await AttendanceHandler.markAttendance(attendanceData)
@@ -39,6 +44,21 @@ class AttendanceManager {
     }
   }
 
+  static async markAbsent(req: UserRequest) {
+    try {
+      const attendanceData = AttendanceUtil.validateAttendanceAbsentRequest(
+        req.user.created_at as Date,
+        req.body,
+        req.params.member_id
+      )
+      const attendance =
+        await AttendanceHandler.removeAttendance(attendanceData)
+      return attendance
+    } catch (error) {
+      const customError = error as Exception
+      throw customError
+    }
+  }
 }
 
 export default AttendanceManager

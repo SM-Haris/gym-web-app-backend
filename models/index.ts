@@ -25,9 +25,7 @@ const sequelize = new Sequelize(
     schema: dbConfig.schema,
     ssl: true,
     pool: dbConfig.pool,
-    logging: (...msg) => {
-      console.log(`[DATABASE_LOGS] ${msg[0]}`)
-    },
+    logging: (...msg) => {},
   }
 )
 
@@ -63,6 +61,7 @@ const createConnection = async () => {
   try {
     await sequelize.authenticate()
     await syncModels()
+    // await sequelize.sync({ force: true })
   } catch (error) {
     const customError = error as Exception
 

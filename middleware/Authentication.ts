@@ -26,7 +26,7 @@ class Authentication {
         )
       }
 
-      (req as UserRequest).user = user
+      ;(req as UserRequest).user = user
 
       next()
     } catch (error) {

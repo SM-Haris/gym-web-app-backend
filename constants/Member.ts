@@ -6,7 +6,7 @@ const Member = Object.freeze({
     INVALID_FETCH_DATA: 'Invalid data provided in members fetch request',
     INVALID_POST_DATA: 'Invalid data provided in during member creation',
     INVALID_PATCH_DATA: 'Invalid data provided in during member updation',
-    INVALID_MEMBER_ID: 'Invalid member id provided'
+    INVALID_MEMBER_ID: 'Invalid member id provided',
   },
 })
 
