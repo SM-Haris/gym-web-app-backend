@@ -19,6 +19,15 @@ class MemberHandler {
   static async findMemberById(member_id: string) {
     return Member.findOne({ where: { id: member_id }, raw: true })
   }
+
+  static async getMemberIds(gymId: string) {
+    return Member.findAll({
+      where: {
+        gym_id: gymId,
+      },
+      attributes: ['id'],
+    });
+  }
 }
 
 export default MemberHandler

@@ -10,6 +10,11 @@ router.get(
   Authentication.authenticate,
   MemberController.getMember
 )
+router.get(
+  `${PREFIX}/stats/:gym_id/from/:from_date/to/:to_date`,
+  Authentication.authenticate,
+  MemberController.getMemberStats
+)
 router.post(
   `${PREFIX}/:gym_id`,
   Authentication.authenticate,

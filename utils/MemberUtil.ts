@@ -96,6 +96,25 @@ class MemberUtil {
 
     return updatedMembers
   }
+
+  static async validateMemberStatRequest(data: any) {
+    if (
+      !data.gym_id ||
+      !Validators.isValidStr(data.gym_id) ||
+      !data.to_date ||
+      !Validators.isValidDate(data.to_date) ||
+      !data.from_date ||
+      !Validators.isValidDate(data.from_date)
+    ) {
+      throw new Exception(
+        MemberConstants.MESSAGES.INVALID_FETCH_DATA,
+        ErrorCodes.BAD_REQUEST,
+        true
+      )
+    }
+
+    return data
+  }
 }
 
 export default MemberUtil

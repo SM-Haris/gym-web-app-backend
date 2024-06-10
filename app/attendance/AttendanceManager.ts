@@ -4,16 +4,43 @@ import { UserRequest } from '../../interfaces/Auth'
 import Attendance from '../../models/Attendance'
 import AttendanceUtil from '../../utils/AttendanceUtil'
 
+interface AttendanceMap {
+  [key: string]: number
+}
+
 class AttendanceManager {
   static async getAttendance(req: UserRequest) {
     try {
-      const memberId = AttendanceUtil.validateAttendanceFetchRequest(
-        req.params.member_id
+      const attendanceData = AttendanceUtil.validateAttendanceFetchRequest(
+        req.params
       )
 
-      const attendance = await AttendanceHandler.getAttendanceByMember(memberId)
+      const attendanceRecords: Attendance[] =
+        await AttendanceHandler.getAttendanceByMember(attendanceData)
 
-      return attendance
+      const attendanceMap: AttendanceMap = attendanceRecords.reduce(
+        (map: any, record) => {
+          map[record.dataValues.date] = record.dataValues.workout_hours
+          return map
+        },
+        {}
+      )
+
+      const dt = new Date(attendanceData.from_date)
+
+      dt.setDate(dt.getDate() + 1)
+
+      const hoursArray = []
+      for (
+        let dt = new Date(attendanceData.from_date);
+        dt <= new Date(attendanceData.to_date);
+        dt.setDate(dt.getDate() + 1)
+      ) {
+        const dateStr = dt.toISOString().split('T')[0]
+        hoursArray.push(attendanceMap[dateStr] || 0)
+      }
+
+      return hoursArray
     } catch (error) {
       const customError = error as Exception
       throw customError

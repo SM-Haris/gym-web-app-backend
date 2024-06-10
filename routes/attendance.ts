@@ -6,7 +6,7 @@ const PREFIX = '/attendance'
 const router = express.Router()
 
 router.get(
-  `${PREFIX}/:member_id`,
+  `${PREFIX}/:member_id/from/:from_date/to/:to_date`,
   Authentication.authenticate,
   AttendanceController.getAttendance
 )
