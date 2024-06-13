@@ -1,22 +1,14 @@
 import UserHandler from '../../handlers/UserHandler'
 import Exception from '../../helpers/Exception'
-import { SignUpRequestBody } from '../../interfaces/Auth'
+import { SignUpRequestBody, UserRequest } from '../../interfaces/Auth'
 import UserUtil from '../../utils/UserUtil'
 
 class UserManager {
-  static async getUser(user_id: string) {
+  static async getUser(req: UserRequest) {
     try {
-      let users
+      console.log(req.user)
 
-      if (user_id) {
-        users = await UserHandler.getUser(user_id)
-
-        return users
-      }
-
-      users = await UserHandler.getAllUsers()
-
-      return users
+      return req.user
     } catch (error) {
       const customError = error as Exception
       throw customError

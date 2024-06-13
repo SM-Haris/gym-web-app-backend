@@ -2,6 +2,7 @@ export interface MemberPostRequestBody {
   name: string
   email: string
   phone_number: string
+  fee: string
 }
 
 export interface MemberPatchRequestBody {

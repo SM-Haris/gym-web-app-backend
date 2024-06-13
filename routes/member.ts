@@ -25,5 +25,10 @@ router.patch(
   Authentication.authenticate,
   MemberController.updateMember
 )
+router.delete(
+  `${PREFIX}/:member_id`,
+  Authentication.authenticate,
+  MemberController.deleteMember
+)
 
 export default router

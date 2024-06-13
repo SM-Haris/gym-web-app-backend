@@ -28,6 +28,7 @@ class MemberUtil {
       !data.email ||
       !data.phone_number ||
       !gym_id ||
+      !data.fee ||
       !Validators.isValidStr(data.name) ||
       !Validators.isValidateEmail(data.email) ||
       !Validators.isValidStr(data.phone_number)
@@ -59,6 +60,22 @@ class MemberUtil {
 
     return {
       ...data,
+      id: member_id,
+    }
+  }
+
+  static validateMemberDeletionRequest(
+    member_id: string
+  ) {
+    if (!member_id || !Validators.isValidStr(member_id)) {
+      throw new Exception(
+        MemberConstants.MESSAGES.INVALID_PATCH_DATA,
+        ErrorCodes.BAD_REQUEST,
+        true
+      )
+    }
+
+    return {
       id: member_id,
     }
   }

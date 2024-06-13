@@ -1,4 +1,4 @@
-import { Op } from 'sequelize'
+import { Op, fn } from 'sequelize'
 import { AttendanceDatabaseInterface } from '../interfaces/Attendance'
 import Attendance from '../models/Attendance'
 
@@ -36,19 +36,23 @@ class AttendanceHandler {
     })
   }
 
-  static async getAttendanceStats(memberIds: string[], fromDate:string, toDate:string) {
+  static async getAttendanceStats(gym_id:string,fromDate:string, toDate:string) {
     return Attendance.findAll({
+      attributes: [
+        [fn('COUNT', '*'), 'count'],
+        'date'
+      ],
       where: {
-        member_id: {
-          [Op.in]: memberIds,
-        },
+        gym_id: gym_id,
         date: {
-          [Op.between]: [fromDate, toDate],
+          [Op.gte]: fromDate,
+          [Op.lte]: toDate,
         },
-      },
-      attributes: ['date', 'member_id'],
-      order: [['date', 'ASC']],
-    })
+      }, raw: true,
+      group: 'date',
+      order: [['date','ASC']]
+    });
+
   }
 }
 

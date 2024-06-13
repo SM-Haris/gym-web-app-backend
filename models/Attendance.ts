@@ -16,6 +16,7 @@ class Attendance extends Model<
   declare id: CreationOptional<string>
   declare date: CreationOptional<string>
   declare workout_hours: CreationOptional<number>
+  declare gym_id: CreationOptional<string>
   declare member_id: CreationOptional<string>
   declare created_at: CreationOptional<Date>
   declare updated_at: CreationOptional<Date>
@@ -34,6 +35,10 @@ Attendance.init(
     },
     workout_hours: {
       type: DataTypes.DECIMAL,
+      allowNull: true,
+    },
+    gym_id: {
+      type: DataTypes.UUID,
       allowNull: true,
     },
     member_id: {

@@ -11,7 +11,7 @@ const port = config.get('port') || 5000
 const app: Express = express()
 
 const corsOptions = {
-  origin: config.get('corsUrl') as string,
+  origin: '*',
 }
 
 app.use(cors(corsOptions))

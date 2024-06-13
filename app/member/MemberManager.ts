@@ -2,8 +2,10 @@ import AttendanceHandler from '../../handlers/AttendanceHandler'
 import MemberHandler from '../../handlers/MemberHandler'
 import Exception from '../../helpers/Exception'
 import { UserRequest } from '../../interfaces/Auth'
+import Member from '../../models/Member'
 import GymUtil from '../../utils/GymUtil'
 import MemberUtil from '../../utils/MemberUtil'
+import moment from 'moment'
 
 interface AttendanceRecord {
   date: string;
@@ -44,36 +46,39 @@ class MemberManager {
       MemberUtil.validateMemberFetchRequest(req.params.gym_id as string)
 
       await GymUtil.validateGymExists(req.params.gym_id)
+      
+      const fromDateObj = moment.utc(req.params.from_date)
+      const toDateObj = moment.utc(req.params.to_date).add(1,'days');
+    
+      const daysDifference = toDateObj.diff(fromDateObj,'days')
+      
+      const attendanceData = await AttendanceHandler.getAttendanceStats(req.params.gym_id,req.params.from_date,req.params.to_date) 
+    
+      const allMembers: Member[] = await MemberHandler.getMembersByDate(req.params.gym_id,toDateObj)   
 
-      const members = await MemberHandler.getMemberIds(req.params.gym_id)
-  
-      const memberIds = members.map(member => member.id);
-  
-      const attendanceRecords: AttendanceRecord[] = await  AttendanceHandler.getAttendanceStats(memberIds,req.params.from_data,req.params.to_date)
-  
-      const attendanceMap: AttendanceMap = attendanceRecords.reduce((map: AttendanceMap, record: AttendanceRecord) => {
-        if (!map[record.date]) {
-          map[record.date] = new Set();
-        }
-        map[record.date].add(record.member_id);
-        return map;
-      }, {} as AttendanceMap);
-  
-      const memberCounts: number[] = [];
-      const memberIdsPerDay: string[][] = [];
+      const totalMembersPerDay: number[] = new Array(daysDifference + 1).fill(0);
+      const membersPresentPerDay: number[] = new Array(daysDifference + 1).fill(0);
+    
+      let memberIndex = 0; 
+      let memberCount = 0
 
-      for (
-        let dt = new Date(req.params.from_date);
-        dt <= new Date(req.params.to_date);
-        dt.setDate(dt.getDate() + 1)
-      ) {
-        const dateStr = dt.toISOString().split('T')[0];
-        const membersOnDate = attendanceMap[dateStr] || new Set();
-        memberCounts.push(membersOnDate.size);
-        memberIdsPerDay.push(Array.from(membersOnDate));
+      for (const attendance of attendanceData){
+        membersPresentPerDay[moment(attendance.date).diff(fromDateObj,'days') + 1] = attendance.count 
       }
-  
-      return [{ name: "Member Count", values:memberCounts},{name: "Member Present", values: memberIdsPerDay }];
+
+      for (let i = 1; i <= daysDifference; i++) {
+        const formattedDate = fromDateObj.add(1,'days').toISOString().split('T')[0]
+        
+        while (memberIndex < allMembers.length && allMembers[memberIndex].created_at.toISOString().split('T')[0] <= formattedDate && formattedDate <= toDateObj.toISOString().split('T')[0]) {
+          memberCount++;
+          memberIndex++;
+        }
+
+        totalMembersPerDay[i] = memberCount
+      }
+
+      return [{ name: "Total Members",values:totalMembersPerDay},{name:"Members Present", values:membersPresentPerDay }];
+
     } catch (error) {
       const customError = error as Exception
       throw customError
@@ -115,6 +120,24 @@ class MemberManager {
       throw customError
     }
   }
+
+  static async deleteMember(req: UserRequest) {
+    try {
+      const memberData = MemberUtil.validateMemberDeletionRequest(
+        req.params.member_id as string
+      )
+
+      await MemberUtil.validateMemberExists(req.params.member_id)
+
+      const member = MemberHandler.deleteMember(memberData.id)
+
+      return member
+    } catch (error) {
+      const customError = error as Exception
+      throw customError
+    }
+  }
+
 }
 
 export default MemberManager

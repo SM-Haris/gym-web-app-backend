@@ -4,11 +4,12 @@ import Validators from '../../helpers/Validators'
 import ErrorCodes from '../../constants/ErrorCodes'
 import UserManager from './UserManager'
 import User from '../../constants/User'
+import { UserRequest } from '../../interfaces/Auth'
 
 class UserController {
   static async getUser(req: Request, res: Response) {
     try {
-      const status = await UserManager.getUser(req.params.user_id)
+      const status = await UserManager.getUser(req as UserRequest)
 
       res.json({
         success: true,

@@ -18,6 +18,7 @@ class Member extends Model<
   declare email: CreationOptional<string>
   declare gym_id: CreationOptional<string>
   declare phone_number: CreationOptional<string>
+  declare fee: CreationOptional<number>
   declare created_at: CreationOptional<Date>
   declare updated_at: CreationOptional<Date>
 }
@@ -43,6 +44,10 @@ Member.init(
     },
     phone_number: {
       type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    fee: {
+      type: DataTypes.DECIMAL,
       allowNull: true,
     },
     created_at: {
