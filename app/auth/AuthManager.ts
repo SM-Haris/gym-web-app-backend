@@ -5,6 +5,7 @@ import {
   LoginRequestBody,
   SignUpRequestBody,
   User,
+  UserRequest,
 } from '../../interfaces/Auth'
 import AuthUtil from '../../utils/AuthUtil'
 
@@ -57,6 +58,8 @@ class AuthManager {
     const { access_token, refresh_token } =
       await AuthManager.setAccessToken(user)
 
+    delete user.dataValues.password
+
     return { ...user.dataValues, access_token, refresh_token }
   }
 
@@ -80,6 +83,19 @@ class AuthManager {
     delete user.password
 
     return user
+  }
+
+  static async validateUser(req: UserRequest) {
+    try {
+      const user = await UserHandler.findUserByEmail(req.body.email)
+
+      AuthUtil.validateUserForSignUp(user)
+
+      return 'User data is valid'
+    } catch (error) {
+      const customError = error as Exception
+      throw customError
+    }
   }
 }
 

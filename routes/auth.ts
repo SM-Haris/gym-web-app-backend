@@ -10,5 +10,6 @@ router.post(`${PREFIX}/signup`, AuthController.signup)
 router.get(`${PREFIX}/profile`, Authentication.authenticate, (req, res) =>
   AuthController.getUserDetails(req as UserRequest, res)
 )
+router.post(`${PREFIX}/validate`, AuthController.validateUser)
 
 export default router

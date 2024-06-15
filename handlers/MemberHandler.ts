@@ -31,19 +31,20 @@ class MemberHandler {
         gym_id: gymId,
       },
       attributes: ['id'],
-    });
+    })
   }
 
-  static async getMembersByDate(gymId:string,toDate:Moment) {
+  static async getMembersByDate(gymId: string, toDate: Moment) {
     return Member.findAll({
       where: {
         gym_id: gymId,
         created_at: {
           [Op.lt]: toDate.toISOString(),
         },
-      }, raw: true,
-      order: [['created_at','ASC']]
-    });
+      },
+      raw: true,
+      order: [['created_at', 'ASC']],
+    })
   }
 }
 

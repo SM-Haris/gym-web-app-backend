@@ -4,10 +4,14 @@ import Attendance from '../models/Attendance'
 
 class AttendanceHandler {
   static async getAttendanceByMember(data: any) {
-    return Attendance.findAll({ where: { member_id: data.member_id,
-      date: {
-        [Op.between]: [data.from_date, data.to_date],
-      }, }, })
+    return Attendance.findAll({
+      where: {
+        member_id: data.member_id,
+        date: {
+          [Op.between]: [data.from_date, data.to_date],
+        },
+      },
+    })
   }
 
   static async getAttendanceByDate(date: string) {
@@ -36,23 +40,24 @@ class AttendanceHandler {
     })
   }
 
-  static async getAttendanceStats(gym_id:string,fromDate:string, toDate:string) {
+  static async getAttendanceStats(
+    gym_id: string,
+    fromDate: string,
+    toDate: string
+  ) {
     return Attendance.findAll({
-      attributes: [
-        [fn('COUNT', '*'), 'count'],
-        'date'
-      ],
+      attributes: [[fn('COUNT', '*'), 'count'], 'date'],
       where: {
         gym_id: gym_id,
         date: {
           [Op.gte]: fromDate,
           [Op.lte]: toDate,
         },
-      }, raw: true,
+      },
+      raw: true,
       group: 'date',
-      order: [['date','ASC']]
-    });
-
+      order: [['date', 'ASC']],
+    })
   }
 }
 

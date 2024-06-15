@@ -33,6 +33,33 @@ class AuthController {
     }
   }
 
+  static async validateUser(req: Request, res: Response) {
+    try {
+      const user = await AuthManager.validateUser(req as UserRequest)
+
+      res.json({
+        success: true,
+        data: user,
+      })
+    } catch (err: any) {
+      const customError = err as Exception
+
+      return res
+        .status(
+          Validators.validateCode(
+            customError.code,
+            ErrorCodes.INTERNAL_SERVER_ERROR
+          ) || ErrorCodes.INTERNAL_SERVER_ERROR
+        )
+        .json({
+          success: false,
+          message: customError.reportError
+            ? customError.message
+            : UserConstants.MESSAGES.SIGN_UP_FAILED,
+        })
+    }
+  }
+
   static async login(req: Request<{}, {}, LoginRequestBody>, res: Response) {
     try {
       const user = await AuthManager.login(req.body)

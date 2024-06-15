@@ -64,9 +64,7 @@ class MemberUtil {
     }
   }
 
-  static validateMemberDeletionRequest(
-    member_id: string
-  ) {
+  static validateMemberDeletionRequest(member_id: string) {
     if (!member_id || !Validators.isValidStr(member_id)) {
       throw new Exception(
         MemberConstants.MESSAGES.INVALID_PATCH_DATA,

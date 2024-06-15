@@ -31,7 +31,7 @@ class AttendanceManager {
       dt.setDate(dt.getDate() + 1)
 
       const hoursArray = []
-      
+
       for (
         let dt = new Date(attendanceData.from_date);
         dt <= new Date(attendanceData.to_date);

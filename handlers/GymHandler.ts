@@ -17,6 +17,7 @@ class GymHandler {
   static async updateGym(data: GymDatabaseInterface) {
     return Gym.update(data, {
       where: { owner_id: data.owner_id, id: data.gym_id },
+      returning: true,
     })
   }
 }

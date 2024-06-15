@@ -61,7 +61,6 @@ const createConnection = async () => {
   try {
     await sequelize.authenticate()
     await syncModels()
-    await sequelize.sync({ force: true })
   } catch (error) {
     const customError = error as Exception
 

@@ -5,7 +5,7 @@ export interface User {
   name: string
   email: string
   password?: string
-  phone_number: string
+  phone_number?: string
   access_token?: string
   created_at?: Date
   updated_at?: Date
@@ -30,4 +30,11 @@ export interface LoginRequestBody {
 
 export interface UserRequest extends Request {
   user: User
+}
+
+export interface UserUpdateRequestBody {
+  name?: string
+  email?: string
+  password?: string
+  phone_number?: string
 }

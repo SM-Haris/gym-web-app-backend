@@ -1,4 +1,4 @@
-import { SignUpRequestBody } from '../interfaces/Auth'
+import { SignUpRequestBody, UserUpdateRequestBody } from '../interfaces/Auth'
 import User from '../models/User'
 
 class UserHandler {
@@ -12,6 +12,14 @@ class UserHandler {
 
   static async createUser(data: SignUpRequestBody) {
     return User.create(data)
+  }
+
+  static async deleteUser(user_id: string) {
+    return User.destroy({ where: { id: user_id } })
+  }
+
+  static async updateUser(user_id: string, data: UserUpdateRequestBody) {
+    return User.update(data, { where: { id: user_id }, returning: true })
   }
 
   static findUserByEmail(email: string | undefined): Promise<any> {
@@ -44,6 +52,7 @@ class UserHandler {
         id: userId,
         access_token: authToken,
       },
+      raw: true,
     })
   }
 

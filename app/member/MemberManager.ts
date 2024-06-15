@@ -8,12 +8,12 @@ import MemberUtil from '../../utils/MemberUtil'
 import moment from 'moment'
 
 interface AttendanceRecord {
-  date: string;
-  member_id: string;
+  date: string
+  member_id: string
 }
 
 interface AttendanceMap {
-  [key: string]: Set<string>;
+  [key: string]: Set<string>
 }
 
 class MemberManager {
@@ -46,39 +46,60 @@ class MemberManager {
       MemberUtil.validateMemberFetchRequest(req.params.gym_id as string)
 
       await GymUtil.validateGymExists(req.params.gym_id)
-      
-      const fromDateObj = moment.utc(req.params.from_date)
-      const toDateObj = moment.utc(req.params.to_date).add(1,'days');
-    
-      const daysDifference = toDateObj.diff(fromDateObj,'days')
-      
-      const attendanceData = await AttendanceHandler.getAttendanceStats(req.params.gym_id,req.params.from_date,req.params.to_date) 
-    
-      const allMembers: Member[] = await MemberHandler.getMembersByDate(req.params.gym_id,toDateObj)   
 
-      const totalMembersPerDay: number[] = new Array(daysDifference + 1).fill(0);
-      const membersPresentPerDay: number[] = new Array(daysDifference + 1).fill(0);
-    
-      let memberIndex = 0; 
+      const fromDateObj = moment.utc(req.params.from_date)
+      const toDateObj = moment.utc(req.params.to_date).add(1, 'days')
+
+      const daysDifference = toDateObj.diff(fromDateObj, 'days')
+
+      const attendanceData = await AttendanceHandler.getAttendanceStats(
+        req.params.gym_id,
+        req.params.from_date,
+        req.params.to_date
+      )
+
+      const allMembers: Member[] = await MemberHandler.getMembersByDate(
+        req.params.gym_id,
+        toDateObj
+      )
+
+      const totalMembersPerDay: number[] = new Array(daysDifference + 1).fill(0)
+      const membersPresentPerDay: number[] = new Array(daysDifference + 1).fill(
+        0
+      )
+
+      let memberIndex = 0
       let memberCount = 0
 
-      for (const attendance of attendanceData){
-        membersPresentPerDay[moment(attendance.date).diff(fromDateObj,'days') + 1] = attendance.count 
+      for (const attendance of attendanceData) {
+        membersPresentPerDay[
+          moment(attendance.date).diff(fromDateObj, 'days') + 1
+        ] = attendance.count
       }
 
       for (let i = 1; i <= daysDifference; i++) {
-        const formattedDate = fromDateObj.add(1,'days').toISOString().split('T')[0]
-        
-        while (memberIndex < allMembers.length && allMembers[memberIndex].created_at.toISOString().split('T')[0] <= formattedDate && formattedDate <= toDateObj.toISOString().split('T')[0]) {
-          memberCount++;
-          memberIndex++;
+        const formattedDate = fromDateObj
+          .add(1, 'days')
+          .toISOString()
+          .split('T')[0]
+
+        while (
+          memberIndex < allMembers.length &&
+          allMembers[memberIndex].created_at.toISOString().split('T')[0] <=
+            formattedDate &&
+          formattedDate <= toDateObj.toISOString().split('T')[0]
+        ) {
+          memberCount++
+          memberIndex++
         }
 
         totalMembersPerDay[i] = memberCount
       }
 
-      return [{ name: "Total Members",values:totalMembersPerDay},{name:"Members Present", values:membersPresentPerDay }];
-
+      return [
+        { name: 'Total Members', values: totalMembersPerDay },
+        { name: 'Members Present', values: membersPresentPerDay },
+      ]
     } catch (error) {
       const customError = error as Exception
       throw customError
@@ -137,7 +158,6 @@ class MemberManager {
       throw customError
     }
   }
-
 }
 
 export default MemberManager
