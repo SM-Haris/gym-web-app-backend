@@ -56,7 +56,7 @@ class UserController {
           success: false,
           message: customError.reportError
             ? customError.message
-            : User.MESSAGES.FETCH_FAILURE,
+            : User.MESSAGES.DELETE_FAILURE,
         })
     }
   }
@@ -83,7 +83,7 @@ class UserController {
           success: false,
           message: customError.reportError
             ? customError.message
-            : User.MESSAGES.FETCH_FAILURE,
+            : User.MESSAGES.UPDATE_USER_FAILED,
         })
     }
   }

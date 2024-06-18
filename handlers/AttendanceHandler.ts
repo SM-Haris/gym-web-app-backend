@@ -1,9 +1,12 @@
 import { Op, fn } from 'sequelize'
-import { AttendanceDatabaseInterface } from '../interfaces/Attendance'
+import {
+  AttendanceDatabaseInterface,
+  FetchMemberAttendanceInterface,
+} from '../interfaces/Attendance'
 import Attendance from '../models/Attendance'
 
 class AttendanceHandler {
-  static async getAttendanceByMember(data: any) {
+  static async getAttendanceByMember(data: FetchMemberAttendanceInterface) {
     return Attendance.findAll({
       where: {
         member_id: data.member_id,

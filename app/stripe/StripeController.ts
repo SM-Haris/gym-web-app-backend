@@ -3,8 +3,8 @@ import Exception from '../../helpers/Exception'
 import Validators from '../../helpers/Validators'
 import ErrorCodes from '../../constants/ErrorCodes'
 import StripeManager from './StripeManager'
-import Member from '../../constants/Member'
 import { UserRequest } from '../../interfaces/Auth'
+import { StripeConstants } from '../../constants'
 
 class StripeController {
   static async checkout(req: Request, res: Response) {
@@ -29,7 +29,7 @@ class StripeController {
           success: false,
           message: customError.reportError
             ? customError.message
-            : Member.MESSAGES.FETCH_FAILURE,
+            : StripeConstants.MESSAGES.CHECKOUT_FAILURE,
         })
     }
   }
@@ -56,7 +56,7 @@ class StripeController {
           success: false,
           message: customError.reportError
             ? customError.message
-            : Member.MESSAGES.FETCH_FAILURE,
+            : StripeConstants.MESSAGES.PORTAL_SESSION_FAILURE,
         })
     }
   }

@@ -7,8 +7,10 @@ const router = express.Router()
 
 router.post(`${PREFIX}/login`, AuthController.login)
 router.post(`${PREFIX}/signup`, AuthController.signup)
-router.get(`${PREFIX}/profile`, Authentication.authenticate, (req, res) =>
-  AuthController.getUserDetails(req as UserRequest, res)
+router.get(
+  `${PREFIX}/profile`,
+  Authentication.authenticate,
+  AuthController.getUserDetails
 )
 router.post(`${PREFIX}/validate`, AuthController.validateUser)
 

@@ -1,9 +1,12 @@
 import { ErrorCodes, MemberConstants } from '../constants'
 import MemberHandler from '../handlers/MemberHandler'
 import { Exception, Validators } from '../helpers'
+import { AttendanceDatabaseInterface } from '../interfaces/Attendance'
 import {
+  MemberDatabaseInterface,
   MemberPatchRequestBody,
   MemberPostRequestBody,
+  MemberStatFetchRequest,
 } from '../interfaces/Member'
 
 class MemberUtil {
@@ -16,7 +19,7 @@ class MemberUtil {
       )
     }
 
-    return
+    return gym_id
   }
 
   static validateMemberCreationRequest(
@@ -97,8 +100,11 @@ class MemberUtil {
     }
   }
 
-  static async markIsPresentToday(members: any, attendance: any) {
-    const attendanceSet = new Set(attendance.map((att: any) => att.member_id))
+  static async markIsPresentToday(
+    members: MemberDatabaseInterface[],
+    attendance: AttendanceDatabaseInterface[]
+  ) {
+    const attendanceSet = new Set(attendance.map((att) => att.member_id))
 
     const updatedMembers = members.map((member: any) => {
       const isPresentToday = attendanceSet.has(member.id)
@@ -112,7 +118,7 @@ class MemberUtil {
     return updatedMembers
   }
 
-  static async validateMemberStatRequest(data: any) {
+  static async validateMemberStatRequest(data: MemberStatFetchRequest) {
     if (
       !data.gym_id ||
       !Validators.isValidStr(data.gym_id) ||

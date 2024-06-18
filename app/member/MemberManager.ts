@@ -1,31 +1,25 @@
 import AttendanceHandler from '../../handlers/AttendanceHandler'
 import MemberHandler from '../../handlers/MemberHandler'
 import Exception from '../../helpers/Exception'
+import { AttendanceCountQuery } from '../../interfaces/Attendance'
 import { UserRequest } from '../../interfaces/Auth'
 import Member from '../../models/Member'
 import GymUtil from '../../utils/GymUtil'
 import MemberUtil from '../../utils/MemberUtil'
 import moment from 'moment'
 
-interface AttendanceRecord {
-  date: string
-  member_id: string
-}
-
-interface AttendanceMap {
-  [key: string]: Set<string>
-}
-
 class MemberManager {
   static async getMember(req: UserRequest) {
     try {
       const today = new Date().toISOString().slice(0, 10)
 
-      MemberUtil.validateMemberFetchRequest(req.params.gym_id as string)
+      const gymId = MemberUtil.validateMemberFetchRequest(
+        req.params.gym_id as string
+      )
 
-      await GymUtil.validateGymExists(req.params.gym_id)
+      await GymUtil.validateGymExists(gymId)
 
-      const members = await MemberHandler.getMembersByGym(req.params.gym_id)
+      const members = await MemberHandler.getMembersByGym(gymId)
 
       const todayAttendance = await AttendanceHandler.getAttendanceByDate(today)
 
@@ -52,11 +46,11 @@ class MemberManager {
 
       const daysDifference = toDateObj.diff(fromDateObj, 'days')
 
-      const attendanceData = await AttendanceHandler.getAttendanceStats(
+      const attendanceData = (await AttendanceHandler.getAttendanceStats(
         req.params.gym_id,
         req.params.from_date,
         req.params.to_date
-      )
+      )) as unknown as AttendanceCountQuery[]
 
       const allMembers: Member[] = await MemberHandler.getMembersByDate(
         req.params.gym_id,

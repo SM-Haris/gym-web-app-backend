@@ -56,7 +56,7 @@ class GymController {
           success: false,
           message: customError.reportError
             ? customError.message
-            : Gym.MESSAGES.FETCH_FAILURE,
+            : Gym.MESSAGES.REVENUE_FETCH_FAILURE,
         })
     }
   }

@@ -56,7 +56,7 @@ class MemberController {
           success: false,
           message: customError.reportError
             ? customError.message
-            : Member.MESSAGES.FETCH_FAILURE,
+            : Member.MESSAGES.MEMBER_STATS_FAILURE,
         })
     }
   }
@@ -137,7 +137,7 @@ class MemberController {
           success: false,
           message: customError.reportError
             ? customError.message
-            : Member.MESSAGES.UPDATION_FAILURE,
+            : Member.MESSAGES.DELETE_FAILURE,
         })
     }
   }

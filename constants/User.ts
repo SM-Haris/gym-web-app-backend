@@ -71,7 +71,7 @@ const User = Object.freeze({
     ACCOUNT_ALREADY_EXIST: 'Account already exist',
     INVALID_DATA_TO_SIGNUP_USER: 'Invalid data to sign up user',
     INVALID_DATA_TO_UPDATE_USER: 'Invalid data to update user profile',
-    UPDATE_USER_FAILED: 'Update user Failed',
+    UPDATE_USER_FAILED: 'Something went wrong user could not be Updated',
     USER_DOES_NOT_EXIST: 'User does not exist',
     FIRST_NAME_IS_REQUIRED: 'First name is required',
     INAVALID_MIDDLE_NAME: 'Invalid middle name',
@@ -89,6 +89,11 @@ const User = Object.freeze({
       'You have insufficient permission to perform this action',
     USER_STATE_IS_NOT_VALID_TO_PERFORM_THIS_ACTION:
       'User state is not valid to perform this action',
+    USER_DETAIL_FETCH_FAILURE:
+      'Something went wrong User details could not be fetched',
+    USER_VALIDATION_FAILURE:
+      'Something went wrong user details could not be validated',
+    DELETE_FAILURE: 'Something went wrong user could not be deleted',
   },
 })
 

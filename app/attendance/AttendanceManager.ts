@@ -79,8 +79,10 @@ class AttendanceManager {
         req.body,
         req.params.member_id
       )
+
       const attendance =
         await AttendanceHandler.removeAttendance(attendanceData)
+
       return attendance
     } catch (error) {
       const customError = error as Exception

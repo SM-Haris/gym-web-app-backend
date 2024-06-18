@@ -75,8 +75,8 @@ class AuthManager {
     return { ...user, access_token, refresh_token }
   }
 
-  static async getUserDetails(email: string) {
-    const user = await UserHandler.findUserByEmail(email)
+  static async getUserDetails(req: UserRequest) {
+    const user = await UserHandler.findUserByEmail(req.user.email)
 
     delete user.access_token
     delete user.refresh_token

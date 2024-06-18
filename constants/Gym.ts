@@ -5,6 +5,8 @@ const Gym = Object.freeze({
     CREATION_FAILURE: 'Something went wrong while creating gym',
     UPDATION_FAILURE: 'Something went wrong while updating gym',
     INVALID_GYM_ID: 'Invalid gym id provided',
+    REVENUE_FETCH_FAILURE:
+      'Something went wrong gym revenue details could not be fetched',
   },
 })
 

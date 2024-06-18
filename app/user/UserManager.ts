@@ -10,8 +10,6 @@ class UserManager {
 
       delete userData.password
 
-      console.log(userData)
-
       return userData
     } catch (error) {
       const customError = error as Exception

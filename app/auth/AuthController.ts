@@ -55,7 +55,7 @@ class AuthController {
           success: false,
           message: customError.reportError
             ? customError.message
-            : UserConstants.MESSAGES.SIGN_UP_FAILED,
+            : UserConstants.MESSAGES.USER_VALIDATION_FAILURE,
         })
     }
   }
@@ -87,11 +87,9 @@ class AuthController {
     }
   }
 
-  static async getUserDetails(req: UserRequest, res: Response) {
-    const { email } = req.user || {}
-
+  static async getUserDetails(req: Request, res: Response) {
     try {
-      const user = await AuthManager.getUserDetails(email || '')
+      const user = await AuthManager.getUserDetails(req as UserRequest)
 
       res.json({
         success: true,
@@ -111,7 +109,7 @@ class AuthController {
           success: false,
           message: customError.reportError
             ? customError.message
-            : UserConstants.MESSAGES.LOGIN_FAILED,
+            : UserConstants.MESSAGES.USER_DETAIL_FETCH_FAILURE,
         })
     }
   }

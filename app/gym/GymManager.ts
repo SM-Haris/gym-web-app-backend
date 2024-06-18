@@ -4,7 +4,6 @@ import MemberHandler from '../../handlers/MemberHandler'
 import Exception from '../../helpers/Exception'
 import { UserRequest } from '../../interfaces/Auth'
 import GymUtil from '../../utils/GymUtil'
-import MemberUtil from '../../utils/MemberUtil'
 
 class GymManager {
   static async getGym(req: UserRequest) {

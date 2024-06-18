@@ -15,3 +15,9 @@ export interface MemberDatabaseInterface extends MemberPatchRequestBody {
   gym_id?: string
   id?: string
 }
+
+export interface MemberStatFetchRequest {
+  to_date: string
+  from_date: string
+  gym_id: string
+}

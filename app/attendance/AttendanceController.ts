@@ -56,7 +56,7 @@ class AttendanceController {
           success: false,
           message: customError.reportError
             ? customError.message
-            : Attendance.MESSAGES.MARK_FAILURE,
+            : Attendance.MESSAGES.PRESENT_FAILURE,
         })
     }
   }
@@ -83,7 +83,7 @@ class AttendanceController {
           success: false,
           message: customError.reportError
             ? customError.message
-            : Attendance.MESSAGES.MARK_FAILURE,
+            : Attendance.MESSAGES.ABSENT_FAILURE,
         })
     }
   }
