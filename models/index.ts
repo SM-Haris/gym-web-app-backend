@@ -14,20 +14,22 @@ const db: any = {}
 
 const dbConfig = config.get('database') as DatabaseConfig
 
-const sequelize = new Sequelize(
-  dbConfig.name,
-  dbConfig.username,
-  dbConfig.password,
-  {
-    dialectModule: pg,
-    host: dbConfig.host,
-    dialect: dbConfig.client,
-    schema: dbConfig.schema,
-    ssl: true,
-    pool: dbConfig.pool,
-    logging: (...msg) => {},
-  }
-)
+// const sequelize = new Sequelize(
+//   dbConfig.name,
+//   dbConfig.username,
+//   dbConfig.password,
+//   {
+//     dialectModule: pg,
+//     host: dbConfig.host,
+//     dialect: dbConfig.client,
+//     schema: dbConfig.schema,
+//     ssl: true,
+//     pool: dbConfig.pool,
+//     logging: (...msg) => {},
+//   }
+// )
+
+const sequelize = new Sequelize('postgresql://gym_db_owner:WsQo9Nq6nAGf@ep-restless-darkness-a1po9zip.ap-southeast-1.aws.neon.tech/gym_db?sslmode=require')
 
 const syncModels = async () => {
   try {
