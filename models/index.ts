@@ -5,7 +5,7 @@ import config from 'config'
 import pg from 'pg'
 import Exception from '../helpers/Exception'
 import ErrorMessages from '../constants/ErrorMessages'
-import { DatabaseConfig } from '../interface/Config'
+import { DatabaseConfig } from '../interfaces/Config'
 
 const _dirname = dirname(__filename)
 
@@ -14,22 +14,22 @@ const db: any = {}
 
 const dbConfig = config.get('database') as DatabaseConfig
 
-const sequelize = new Sequelize(
-  dbConfig.name,
-  dbConfig.username,
-  dbConfig.password,
-  {
-    dialectModule: pg,
-    host: dbConfig.host,
-    dialect: dbConfig.client,
-    schema: dbConfig.schema,
-    ssl: true,
-    pool: dbConfig.pool,
-    logging: (...msg) => {
-      console.log(`[DATABASE_LOGS] ${msg[0]}`)
-    },
-  }
-)
+// const sequelize = new Sequelize(
+//   dbConfig.name,
+//   dbConfig.username,
+//   dbConfig.password,
+//   {
+//     dialectModule: pg,
+//     host: dbConfig.host,
+//     dialect: dbConfig.client,
+//     schema: dbConfig.schema,
+//     ssl: true,
+//     pool: dbConfig.pool,
+//     logging: (...msg) => {},
+//   }
+// )
+
+const sequelize = new Sequelize('postgresql://gym_db_owner:WsQo9Nq6nAGf@ep-restless-darkness-a1po9zip.ap-southeast-1.aws.neon.tech/gym_db?sslmode=require')
 
 const syncModels = async () => {
   try {
