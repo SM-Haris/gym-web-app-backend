@@ -3,10 +3,10 @@
 
 This is the backend API for the GymUp gym management application, built with Node.js, TypeScript, Express, PostgreSQL, and Sequelize. It provides the functionality to:
 
-1. Manage user accounts (signup, login)
-2. Process memberships and subscriptions (using Stripe - disabled in testing version)
-3. Track member attendance
-4. Generate member and revenue statistics
+* Manage user accounts (signup, login)
+* Process memberships and subscriptions (using Stripe - disabled in testing version)
+* Track member attendance
+* Generate member and revenue statistics
 
 ## Prerequisites
  
@@ -15,27 +15,27 @@ Installation
 
 ## Clone the Repository:
 
-### Bash
-### git clone https://<your-github-repo-url>
+```Bash
+git clone https://github.com/SM-Haris/gym-web-app-backend.git
+```
 Use code with caution.
-
-content_copy
-Replace <your-github-repo-url> with the actual URL of your GitHub repository.
 
 ## Install Dependencies:
 
 Navigate to the project directory:
 
-## Bash
-### cd gym-web-app-backend
+```Bash
+cd gym-web-app-backend
+```
 Use code with caution.
-content_copy
+
 Install dependencies using npm or yarn:
 
-### Bash
-### npm install
+```Bash
+npm install
+```
+
 Use code with caution.
-content_copy
 
 ## Environment Setup
 
@@ -45,19 +45,19 @@ Usage (Development)
 
 ## Start the development server:
 
-### Bash
-### npm start
+```Bash
+npm start
+```
 Use code with caution.
-content_copy
 
-This will typically start the server on a default port (e.g., http://localhost:3000). The exact port number might vary.
+This will typically start the server on a default port (e.g., http://localhost:5000). The exact port number might vary.
 
 ## (Optional) Development Mode:
 
-### Bash
-### npm run dev
+```Bash
+npm run dev
+```
 Use code with caution.
-content_copy
 
 This starts a development server with hot reloading and watchers for code changes.
 
