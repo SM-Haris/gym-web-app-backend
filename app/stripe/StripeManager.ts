@@ -22,8 +22,8 @@ class StripeManager {
         },
       ],
       mode: 'subscription',
-      success_url: `${YOUR_DOMAIN}/?success=true&session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+      success_url: `${YOUR_DOMAIN}success?success=true&session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${YOUR_DOMAIN}cancel?canceled=true`,
     })
 
     return session
