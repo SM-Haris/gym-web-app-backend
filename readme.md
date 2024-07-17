@@ -77,6 +77,56 @@ We welcome contributions! The project uses the ISC license. Feel free to create 
 
 Deployment instructions will depend on your chosen hosting provider. Consider using platforms like Heroku or AWS for deploying Node.js applications.
 
+## Docker Support
+This project includes a docker.yaml file and a Dockerfile to create a Docker image of the application. You can use these files to deploy the application in a containerized environment.
+
+### Prerequisites:
+**Docker:** Ensure you have Docker installed on your system. You can download and install Docker from the official website (https://www.docker.com/products/docker-desktop/).
+Instructions:
+
+### Navigate to the project directory:
+
+```Bash
+cd gym-web-app-frontend
+```
+
+### Build and run the container:
+
+```Bash
+docker-compose up --build
+```
+
+This command performs the following actions:
+
+Builds a Docker image for the application using the Dockerfile. (This only happens on the first run or if your code has changed.)
+Creates and starts a Docker container based on the image.
+Runs the application within the container.
+Access the Frontend:
+
+The GymUp frontend will be accessible on your local machine through port 80. You can access it using a web browser by visiting:
+
+```bash
+http://localhost:80
+```
+
+### Additional Notes:
+
+The docker-compose.yaml file defines the configuration for the containerized application.
+
+By default, the docker-compose up --build command starts the container in the foreground. To run it in the background, use the -d flag:
+
+```Bash
+docker-compose up --build -d
+```
+
+You can stop the container using the following command:
+
+```Bash
+docker-compose down
+```
+
+This approach allows you to leverage Docker's containerization features for a more isolated and portable deployment of your GymUp frontend API.
+
 ## Known Issues
 
 This backend is for testing purposes only. Real transactions through Stripe are disabled.
